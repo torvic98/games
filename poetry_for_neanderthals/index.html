@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Poesía para Neandertales</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" ></script>
+    <script src="jquery-csv.js"></script>
+</head>
+<body>
+    <div class="card">
+        <div class="top">
+            Fácil
+        </div>
+        <div class="bottom">
+            Palabra más difícil
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "Spanish.csv",
+                dataType: "text",
+                success: function(data) {processData(data);}
+            });
+        });
+
+        function processData(csv) {
+            var data = $.csv.toObjects(csv);
+            // select random row
+            var randomRow = data[Math.floor(Math.random() * data.length)];
+            // select random column
+            var easy = randomRow["Fácil"];
+            console.log(randomRow);
+            // random int between 1 and 3
+            var randomInt = Math.floor(Math.random() * 3) + 1;
+            var hard = randomRow[Object.keys(randomRow)[randomInt]];
+            $(".top").text(easy);
+            $(".bottom").text(hard);
+        }
+    </script>
+</html>

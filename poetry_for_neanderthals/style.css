@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'LowBrow';
+    src: url('LowBrow-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    font-family: LowBrow, sans-serif;
+    font-size: 3em;
+    text-align: center;
+    background-image: url("card.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    max-width: 300px;
+    width: 100%;
+    aspect-ratio: 100 / 145;
+    padding: 0.4em;
+    background-origin: content-box;
+    border: 2px solid black;
+    border-radius: 0.25em;
+    border-top-right-radius: 0.25em;
+}
+
+@media (orientation: portrait) {
+    .card {
+        max-width: 80%;
+    }
+}
+
+.card > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    line-height: 1em;
+    padding: 0 0.5em 0 0.5em;
+}
+
+.card .top {
+    height: 25%;
+    padding-top: 20%;
+    padding-bottom: 5%;
+    border-bottom: none;
+}
+
+.card .bottom {
+    height: 42.5%;
+    padding-bottom: 20%;
+    color: white
+}
