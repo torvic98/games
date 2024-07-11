@@ -176,6 +176,22 @@ $(document).ready(function() {
         }
     }
 
+    // Game logic agnostic to the card database
+    for (let key in scores) {
+        scores[key] = Number(localStorage.getItem(SCORES_KEY + key)) ?? scores[key];
+        $("#score-" + key + " span").html(scores[key]);
+    }
+    score_list = localStorage.getItem(SCORE_LIST_KEY) ?? "[]";
+    score_list = JSON.parse(score_list);
+    turn_timestamp = Number(localStorage.getItem(TURN_TIMESTAMP_KEY)) ?? turn_timestamp;
+    pause_timestamp = Number(localStorage.getItem(PAUSE_TIMESTAMP_KEY)) ?? pause_timestamp;
+    updateTimer();
+    updatePauseResumeButton();
+    turn = localStorage.getItem(TURN_KEY) ?? "glad";
+    updateTurn();
+    setInterval(updateTimer, 1000);
+
+    // Load card database and enable full game logic (on success)
     $.ajax({
         type: "GET",
         url: "assets/csv/spanish.csv",
@@ -184,23 +200,10 @@ $(document).ready(function() {
             processData(data);
             // localStorage.clear();
                                
-            for (let key in scores) {
-                scores[key] = Number(localStorage.getItem(SCORES_KEY + key)) ?? scores[key];
-                $("#score-" + key + " span").html(scores[key]);
-            }
-            score_list = localStorage.getItem(SCORE_LIST_KEY) ?? "[]";
-            score_list = JSON.parse(score_list);
-            showScoreList();
-            turn_timestamp = Number(localStorage.getItem(TURN_TIMESTAMP_KEY)) ?? turn_timestamp;
-            pause_timestamp = Number(localStorage.getItem(PAUSE_TIMESTAMP_KEY)) ?? pause_timestamp;
-            updateTimer();
-            updatePauseResumeButton();
-            turn = localStorage.getItem(TURN_KEY) ?? "glad";
-            updateTurn();
-        
             currentCard = localStorage.getItem(CURRENT_CARD_KEY) ?? "[-1,-1]";
             currentCard = JSON.parse(currentCard);
             showCard();
+            showScoreList();
         
             $("#btn-plus-3").click(function() {
                 updateScore(turn, 3);
@@ -249,8 +252,6 @@ $(document).ready(function() {
                 pauseResumeGame();
                 updatePauseResumeButton();
             });
-
-            setInterval(updateTimer, 1000);
         }
     });
 });
