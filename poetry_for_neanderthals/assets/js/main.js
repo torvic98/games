@@ -110,7 +110,7 @@ $(document).ready(function() {
         if (pause_timestamp !== -1) {
             timeElapsed -= $.now() - pause_timestamp;
         }
-        let timeLeft = Math.max(0, DEFAULT_TIMER - Math.floor(timeElapsed / 1000));
+        let timeLeft = Math.max(0, DEFAULT_TIMER - Math.max(0, Math.floor(timeElapsed / 1000)));
         $("#timer").html(secondsToTime(timeLeft));
         if (timeLeft < 10) {
             $("#timer").css("color", "red");
@@ -199,7 +199,6 @@ $(document).ready(function() {
             updateTurn();
         
             currentCard = localStorage.getItem(CURRENT_CARD_KEY) ?? "[-1,-1]";
-            console.log(currentCard);
             currentCard = JSON.parse(currentCard);
             showCard();
         
@@ -231,18 +230,19 @@ $(document).ready(function() {
                     localStorage.setItem(SCORES_KEY + key, scores[key]);
                     $("#score-" + key + " span").html(scores[key]);
                 }
+                resetScoreList();
                 currentCard = [-1, -1];
                 turn = DEFAULT_FIRST_TURN;
-                localStorage.setItem(TURN_KEY, turn);
                 turn_timestamp = 0;
                 pause_timestamp = 0;
+                localStorage.setItem(TURN_KEY, turn);
                 localStorage.setItem(TURN_TIMESTAMP_KEY, turn_timestamp);
                 localStorage.setItem(PAUSE_TIMESTAMP_KEY, pause_timestamp);
+                localStorage.setItem(CURRENT_CARD_KEY, JSON.stringify(currentCard));
                 updateTurn();
                 updateTimer();
                 updatePauseResumeButton();
                 showCard();
-                resetScoreList();
             });
 
             $("#btn-pause-resume").click(function() {
