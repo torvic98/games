@@ -6,9 +6,7 @@
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 }
 
 .card {
@@ -29,9 +27,23 @@ body {
     border-top-right-radius: 0.25em;
 }
 
+@media screen and (orientation: landscape) and (max-height: 600px) {
+    #rotate-screen {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1000;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}
+
 @media (orientation: portrait) {
     .card {
-        max-width: 80%;
+        max-width: 100%;
     }
 }
 
@@ -48,13 +60,13 @@ body {
 
 .card .top {
     height: 25%;
-    padding-top: 20%;
-    padding-bottom: 5%;
+    margin-top: 25%;
+    margin-bottom: 5%;
     border-bottom: none;
 }
 
 .card .bottom {
-    height: 42.5%;
-    padding-bottom: 20%;
+    height: 39%;
+    margin-bottom: 20%;
     color: white
 }
